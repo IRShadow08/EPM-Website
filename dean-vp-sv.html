@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Performance Monitoring</title>
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Inter');
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #ED1E28;
+      height: 30px;
+      padding: 10px 0;
+    }
+
+    h2 {
+        font-size: 50px;
+        font-family: Alike; 
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 50px;
+      bottom: 51px;
+      background-color: white;
+      color: black;
+      padding: 20px;
+      box-shadow: 5px 0px 5px rgba(4, 4, 4, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .sidebar .logo-img {
+      max-width: 200px;
+      height: auto;
+      margin-bottom: 30px;
+    }
+
+    .sidebar label,
+    .sidebar #sign-out {
+      cursor: pointer;
+      color: black;
+      display: block;
+      padding: 10px 20px; 
+      transition: all 0.3s ease-in-out;
+      margin-bottom: 5px; 
+      box-sizing: border-box;
+      font-size: 20px; 
+    }
+    
+    .sidebar i {
+      font-size: 16px; 
+      margin-right: 10px;
+    }
+    .sidebar label:not(#sign-out) {
+      margin-bottom: 20px;
+    }
+
+    .sidebar #sign-out {
+      margin-top: auto;
+    }
+
+    .sidebar label:hover, .sidebar #sign-out:hover {
+      background-color: #646363;
+      border-top-left-radius: 50px;
+      border-bottom-left-radius: 50px;
+      color: white;
+      margin-right: -20px;
+      padding-right: 40px;
+    }
+
+    .main-content {
+      margin-left: 300px;
+      padding: 20px;
+      text-align: right;
+      background-image: url(assets/bkg2done.png); 
+      background-size: cover; 
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white; 
+      flex-grow: 1;
+    }
+
+    .sidebar input[type="radio"] {
+      display: none;
+    }
+
+    .sidebar input[type="radio"]:checked + label {
+      background-color: #dd2323;
+      border-top-left-radius: 50px;
+      border-bottom-left-radius: 50px;
+      margin-right: -20px;
+      padding-right: 40px;
+      color: white;
+    }
+
+    footer {
+      position: fixed;
+      background-color: #002654;
+      text-align: center;
+      color: white;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      right: -2100px;
+      transform: translateY(-50%);
+      background-color: rgb(222, 222, 222);
+      color: white;
+      width: 75%;
+      height: 75%;
+      transition: right 0.3s ease, opacity 0.3s ease;
+      padding: 20px;
+      border-radius: 50px 0px 0px 50px;
+      opacity: 0;
+      z-index: 999;
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5); 
+    }
+
+    .popup.show {
+      right: 0;
+      opacity: 1;
+    }
+
+    .popup.hide {
+      right: -2100px;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <header></header>
+  <div class="sidebar">
+    <img src="assets/MMCL_Logo_Horizontal.webp" alt="MMCL Logo" class="logo-img">
+
+    <div class="account">
+      <input type="radio" id="my-account" name="menu" checked>
+      <label for="my-account">
+        <i class="fas fa-user"></i> My account
+      </label>
+    </div>
+    <div class="emp-eval">
+      <input type="radio" id="employee-evaluation" name="menu">
+      <label for="employee-evaluation">
+        <i class="fas fa-user-plus"></i>Employee evaluation
+      </label>
+    </div>
+    <div class="emp-agree">
+      <input type="radio" id="employee-agreement" name="menu">
+      <label for="employee-agreement">
+        <i class="fas fa-address-card"></i>Employee agreement
+      </label>
+    </div>
+    <div class="self-agree">
+      <input type="radio" id="my-agreement" name="menu">
+      <label for="my-agreement">
+        <i class="fas fa-address-card"></i>My agreement
+      </label>
+    </div>
+    <div class="self-eval">
+      <input type="radio" id="my-evaluation" name="menu">
+      <label for="my-evaluation">
+        <i class="fas fa-file-signature"></i>My evaluation
+      </label>
+    </div>
+    <div class="report">
+      <input type="radio" id="report" name="menu">
+      <label for="report">
+        <i class="fas fa-clipboard-check"></i> Report
+      </label>
+    </div>
+    <a href="#" id="sign-out">
+      <i class="fas fa-sign-out-alt"></i> Sign out
+    </a>
+  </div>
+  <div class="main-content">
+    <h2>Welcome to Employee Performance Monitoring</h2>
+  </div>
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      Popup Content
+    </div>
+  </div>
+  <footer>
+    <p>© 2024 Mapúa Malayan Colleges Laguna. All rights reserved.</p>
+  </footer>
+  <script>
+    document.getElementById("sign-out").addEventListener("click", function() {
+      var confirmation = confirm("Are you sure you want to log out?");
+      if (confirmation) {
+        alert("You have been logged out.");
+      }
+    });
+
+    var currentPopup = null;
+
+    function showPopup(buttonText) {
+      var popup = document.getElementById("popup");
+      var popupContent;
+      switch(buttonText) {
+        case "My account":
+          popupContent = "My account panel content goes here.";
+          break;
+        case "Employee evaluation":
+          popupContent = "View all employees sent evaluations.";
+          break;
+        case "Employee agreement":
+          popupContent = "View all employees sent agreements.";
+          break;
+        case "My agreement":
+          popupContent = "View the personal agreement.";
+          break;
+        case "My evaluation":
+          popupContent = "View your personal evaluation.";
+          break;
+        case "Report":
+          popupContent = "View reports here.";
+          break;
+        default:
+          popupContent = "Default popup content.";
+      }
+
+      if (currentPopup) {
+        currentPopup.classList.add("hide");
+        currentPopup.addEventListener('transitionend', function() {
+          currentPopup.classList.remove("show");
+          currentPopup.classList.remove("hide");
+          currentPopup.querySelector(".popup-content").innerHTML = "<p>" + popupContent + "</p>";
+          popup.classList.add("show");
+          currentPopup = popup;
+        }, { once: true });
+      } else {
+        popup.querySelector(".popup-content").innerHTML = "<p>" + popupContent + "</p>";
+        popup.classList.add("show");
+        currentPopup = popup;
+      }
+    }
+
+    document.querySelectorAll('.sidebar label').forEach(function(button) {
+      button.addEventListener("click", function() {
+        if (this.getAttribute("for") !== "sign-out") {
+          var buttonText = this.textContent.trim();
+          showPopup(buttonText);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
