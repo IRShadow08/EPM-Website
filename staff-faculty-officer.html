@@ -25,10 +25,10 @@
     }
 
     h2 {
-        font-size: 50px;
-        font-family: Alike; 
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      }
+      font-size: 50px;
+      font-family: Alike; 
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
 
     .sidebar {
       position: fixed;
@@ -61,11 +61,12 @@
       box-sizing: border-box;
       font-size: 20px; 
     }
-    
+
     .sidebar i {
       font-size: 16px;
       margin-right: 10px;
     }
+
     .sidebar label:not(#sign-out) {
       margin-bottom: 20px;
     }
@@ -81,6 +82,7 @@
       color: white;
       margin-right: -20px;
       padding-right: 40px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3); /* Inner shadow effect */
     }
 
     .main-content {
@@ -106,6 +108,7 @@
       margin-right: -20px;
       padding-right: 40px;
       color: white;
+      box-shadow: inset 0px 4px 4px 0px rgba(0, 0, 0, 0.25); /* Inner shadow effect for checked label */
     }
 
     footer {
@@ -150,24 +153,22 @@
   <div class="sidebar">
     <img src="assets/MMCL_Logo_Horizontal.webp" alt="MMCL Logo" class="logo-img">
     <div class="sidebar-btn">
-        <input type="radio" id="my-account" name="menu" checked>
-        <label for="my-account">
+      <input type="radio" id="my-account" name="menu" checked>
+      <label for="my-account">
         <i class="fas fa-user"></i> My account
-        </label>
+      </label>
     </div>
     <div class="sidebar-btn">
       <input type="radio" id="my-agreement" name="menu">
       <label for="my-agreement">
-      <i class="fas fa-file-contract"></i> My agreement
+        <i class="fas fa-file-contract"></i> My agreement
       </label>
     </div>
     <div class="sidebar-btn">
       <input type="radio" id="my-evaluation" name="menu">
       <label for="my-evaluation">
-      <i class="fas fa-file-signature"></i>My evaluation
+        <i class="fas fa-file-signature"></i> My evaluation
       </label>
-    </div>
-    <div>
     </div>
     <a href="#" id="sign-out">
       <i class="fas fa-sign-out-alt"></i> Sign out

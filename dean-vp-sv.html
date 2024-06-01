@@ -80,6 +80,7 @@
       color: white;
       margin-right: -20px;
       padding-right: 40px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3); /* Inner shadow effect */
     }
 
     .main-content {
@@ -105,6 +106,7 @@
       margin-right: -20px;
       padding-right: 40px;
       color: white;
+      box-shadow: inset 0px 4px 4px 0px rgba(0, 0, 0, 0.25); /* Inner shadow effect for checked label */
     }
 
     footer {
@@ -236,28 +238,28 @@
           popupContent = "Default popup content.";
       }
 
-      if (currentPopup) {
+      var popupElement = document.getElementById("popup");
+      popupElement.innerHTML = '<div class="popup-content">' + popupContent + '</div>';
+
+      if (currentPopup && currentPopup !== popup) {
+        currentPopup.classList.remove("show");
         currentPopup.classList.add("hide");
-        currentPopup.addEventListener('transitionend', function() {
-          currentPopup.classList.remove("show");
-          currentPopup.classList.remove("hide");
-          currentPopup.querySelector(".popup-content").innerHTML = "<p>" + popupContent + "</p>";
-          popup.classList.add("show");
-          currentPopup = popup;
-        }, { once: true });
+      }
+
+      if (popup.classList.contains("show")) {
+        popup.classList.remove("show");
+        popup.classList.add("hide");
+        currentPopup = null;
       } else {
-        popup.querySelector(".popup-content").innerHTML = "<p>" + popupContent + "</p>";
+        popup.classList.remove("hide");
         popup.classList.add("show");
         currentPopup = popup;
       }
     }
 
-    document.querySelectorAll('.sidebar label').forEach(function(button) {
-      button.addEventListener("click", function() {
-        if (this.getAttribute("for") !== "sign-out") {
-          var buttonText = this.textContent.trim();
-          showPopup(buttonText);
-        }
+    document.querySelectorAll(".sidebar label").forEach(function(label) {
+      label.addEventListener("click", function() {
+        showPopup(label.textContent.trim());
       });
     });
   </script>

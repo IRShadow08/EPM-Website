@@ -59,6 +59,7 @@
       margin-bottom: 5px; /* Decrease margin */
       box-sizing: border-box;
       font-size: 20px; /* Decrease font size */
+      position: relative; /* Added for shadow effect */
     }
     
     .sidebar i {
@@ -80,6 +81,7 @@
       color: white;
       margin-right: -20px;
       padding-right: 40px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3); /* Inner shadow effect */
     }
 
     .main-content {
@@ -99,12 +101,14 @@
     }
 
     .sidebar input[type="radio"]:checked + label {
-      background-color: #dd2323;
+      background-color: #DB2B2B;
       border-top-left-radius: 50px;
       border-bottom-left-radius: 50px;
       margin-right: -20px;
       padding-right: 40px;
       color: white;
+      box-shadow: inset 0
+      px 4px 4px 0px rgba(0, 0, 0, 0.25); /* Inner shadow effect for checked label */
     }
 
     footer {
