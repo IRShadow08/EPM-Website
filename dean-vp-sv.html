@@ -24,10 +24,11 @@
     }
 
     h2 {
-        font-size: 50px;
-        font-family: Alike; 
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      }
+      font-size: 80px;
+      font-family: Alike; 
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      margin: 0 0 10px 0;
+    }
 
     .sidebar {
       position: fixed;
@@ -58,7 +59,8 @@
       transition: all 0.3s ease-in-out;
       margin-bottom: 5px; 
       box-sizing: border-box;
-      font-size: 20px; 
+      font-size: 20px;
+      position: relative;
     }
     
     .sidebar i {
@@ -89,8 +91,8 @@
       text-align: right;
       background-image: url(assets/bkg2done.png); 
       background-size: cover; 
-      background-position: center;
-      background-repeat: no-repeat;
+      background-position: center; 
+      background-repeat: no-repeat; 
       color: white; 
       flex-grow: 1;
     }
@@ -99,14 +101,14 @@
       display: none;
     }
 
-    .sidebar input[type="radio"]:checked + label {
+    .sidebar label.active {
       background-color: #dd2323;
       border-top-left-radius: 50px;
       border-bottom-left-radius: 50px;
       margin-right: -20px;
       padding-right: 40px;
       color: white;
-      box-shadow: inset 0px 4px 4px 0px rgba(0, 0, 0, 0.25); 
+      box-shadow: inset 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     }
 
     footer {
@@ -123,16 +125,15 @@
       top: 50%;
       right: -2100px;
       transform: translateY(-50%);
-      background-color: rgb(222, 222, 222);
-      color: white;
-      width: 75%;
-      height: 75%;
+      background-color: #F8F8F8;
+      color: black;
+      width: 82%;
+      height: 85.8%;
       transition: right 0.3s ease, opacity 0.3s ease;
       padding: 20px;
-      border-radius: 50px 0px 0px 50px;
       opacity: 0;
-      z-index: 999;
-      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5); 
+      z-index: 1000;
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
     }
 
     .popup.show {
@@ -152,7 +153,7 @@
     <img src="assets/MMCL_Logo_Horizontal.webp" alt="MMCL Logo" class="logo-img">
 
     <div class="sidebar-btn">
-      <input type="radio" id="my-account" name="menu" checked>
+      <input type="radio" id="my-account" name="menu">
       <label for="my-account">
         <i class="fas fa-user"></i> My account
       </label>
@@ -192,7 +193,8 @@
     </a>
   </div>
   <div class="main-content">
-    <h2>Welcome to Employee Performance Monitoring</h2>
+    <h2>Welcome to Employee </h2>
+    <h2>Performance Monitoring</h2>
   </div>
   <div class="popup" id="popup">
     <div class="popup-content">
@@ -238,28 +240,49 @@
           popupContent = "Default popup content.";
       }
 
-      var popupElement = document.getElementById("popup");
-      popupElement.innerHTML = '<div class="popup-content">' + popupContent + '</div>';
-
-      if (currentPopup && currentPopup !== popup) {
-        currentPopup.classList.remove("show");
+      if (currentPopup) {
         currentPopup.classList.add("hide");
-      }
-
-      if (popup.classList.contains("show")) {
-        popup.classList.remove("show");
-        popup.classList.add("hide");
-        currentPopup = null;
+        currentPopup.addEventListener('transitionend', function() {
+          currentPopup.classList.remove("show");
+          currentPopup.classList.remove("hide");
+          currentPopup.querySelector(".popup-content").innerHTML = "<p>" + popupContent + "</p>";
+          popup.classList.add("show");
+          currentPopup = popup;
+        }, { once: true });
       } else {
-        popup.classList.remove("hide");
+        popup.querySelector(".popup-content").innerHTML = "<p>" + popupContent + "</p>";
         popup.classList.add("show");
         currentPopup = popup;
       }
     }
 
-    document.querySelectorAll(".sidebar label").forEach(function(label) {
-      label.addEventListener("click", function() {
-        showPopup(label.textContent.trim());
+    document.querySelectorAll('.sidebar label').forEach(function(button) {
+      button.addEventListener("click", function() {
+        if (this.getAttribute("for") !== "sign-out") {
+          var radioButton = document.getElementById(this.getAttribute("for"));
+          
+          // Toggle the active class
+          if (this.classList.contains("active")) {
+            this.classList.remove("active");
+            radioButton.checked = false;
+            if (currentPopup) {
+              currentPopup.classList.add("hide");
+              currentPopup.addEventListener('transitionend', function() {
+                currentPopup.classList.remove("show");
+                currentPopup.classList.remove("hide");
+                currentPopup = null;
+              }, { once: true });
+            }
+          } else {
+            document.querySelectorAll('.sidebar label').forEach(function(btn) {
+              btn.classList.remove("active");
+            });
+            this.classList.add("active");
+            radioButton.checked = true;
+            var buttonText = this.textContent.trim();
+            showPopup(buttonText);
+          }
+        }
       });
     });
   </script>
