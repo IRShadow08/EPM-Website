@@ -145,6 +145,58 @@
       right: -2100px;
       opacity: 0;
     }
+
+    .form-section {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 15px 0px;
+    }
+    
+    .form-section label {
+      color:#373737;
+      flex: 0 0 230px;
+      text-align: left;
+      margin-right: 10px;
+      font-size: 20px;
+    }
+    
+    .form-section input {
+      height: 24px;
+      flex: 1;
+    }
+
+    .form-section button {
+      display: block;
+      margin: 0 auto;
+      padding: 5px 50px;
+      background-color: #dd2323;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: inset 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+    
+    .form-section button:hover {
+      background-color: #b30000; /* Darken the background color on hover */
+    }
+
+    .self-account{
+      display: flex;
+      font-size: 32px;
+      flex-direction: column;
+      align-items: center;
+      margin: 5px 0;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .self-account i{
+      font-size: 190px;
+      color: black;;
+    }
   </style>
 </head>
 <body>
@@ -213,44 +265,75 @@
     });
 
     var currentPopup = null;
+    var popupContent = null; 
 
     function showPopup(buttonText) {
       var popup = document.getElementById("popup");
-      var popupContent;
+      
+      // Create popup content only if it's not already created
+      if (!popupContent) {
+        popupContent = document.createElement("div");
+        popupContent.classList.add("popup-content");
+        popup.appendChild(popupContent);
+      }
+    
       switch(buttonText) {
         case "My account":
-          popupContent = "My account panel content goes here.";
+          popupContent.innerHTML = `
+            <div class="form-section self-account">
+              <i class="fas fa-user-circle"></i>
+              <h4>Employee Name</h4>
+            </div>
+            <div class="form-section">
+              <label for="id">ID:</label>
+              <input type="text" id="id" readonly>
+            </div>
+            <div class="form-section">
+              <label for="position">Position:</label>
+              <input type="text" id="position" readonly>
+            </div>
+            <div class="form-section">
+              <label for="department">Department:</label>
+              <input type="text" id="department" readonly>
+            </div>
+            <div class="form-section">
+              <label for="email">Supervisor:</label>
+              <input type="text" id="superID" readonly>
+            </div>
+          `;
           break;
         case "Employee evaluation":
-          popupContent = "View all employees sent evaluations.";
+          popupContent.innerHTML = "Employee evaluation content here";
           break;
         case "Employee agreement":
-          popupContent = "View all employees sent agreements.";
+          popupContent.innerHTML = "Employee agreement content here";
+          break;
+        case "My evalution":
+          popupContent.innerHTML = "My evalution content here";
           break;
         case "My agreement":
-          popupContent = "View the personal agreement.";
-          break;
-        case "My evaluation":
-          popupContent = "View your personal evaluation.";
+          popupContent.innerHTML = "My agreement content here";
           break;
         case "Report":
-          popupContent = "View reports here.";
+          popupContent.innerHTML = "Report content here";
           break;
         default:
-          popupContent = "Default popup content.";
+          popupContent.innerHTML = "Default popup content.";
       }
-
+    
       if (currentPopup) {
         currentPopup.classList.add("hide");
         currentPopup.addEventListener('transitionend', function() {
           currentPopup.classList.remove("show");
           currentPopup.classList.remove("hide");
-          currentPopup.querySelector(".popup-content").innerHTML = "<p>" + popupContent + "</p>";
+          currentPopup.querySelector(".popup-content").innerHTML = "";
+          currentPopup.querySelector(".popup-content").appendChild(popupContent);
           popup.classList.add("show");
           currentPopup = popup;
         }, { once: true });
       } else {
-        popup.querySelector(".popup-content").innerHTML = "<p>" + popupContent + "</p>";
+        popup.querySelector(".popup-content").innerHTML = "";
+        popup.querySelector(".popup-content").appendChild(popupContent);
         popup.classList.add("show");
         currentPopup = popup;
       }

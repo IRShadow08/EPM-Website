@@ -23,11 +23,12 @@
       padding: 10px 0;
     }
 
-    h2 {
-      font-size: 80px;
+    .header-text {
+      font-size: 40px;
       font-family: Alike; 
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
       margin: 0 0 10px 0;
+      text-align: right;
     }
 
     .sidebar {
@@ -64,7 +65,7 @@
     }
     
     .sidebar i {
-      font-size: 16px;
+      font-size: 24px;
       margin-right: 10px;
     }
     .sidebar label:not(#sign-out) {
@@ -120,6 +121,8 @@
       width: 100%;
     }
 
+
+    /*Popup CSS*/
     .popup {
       position: fixed;
       top: 50%;
@@ -127,13 +130,14 @@
       transform: translateY(-50%);
       background-color: #F8F8F8;
       color: black;
-      width: 82%;
-      height: 85.8%;
+      width: 75%;
+      height: 75%;
       transition: right 0.3s ease, opacity 0.3s ease;
       padding: 20px;
       opacity: 0;
       z-index: 1000;
       box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+      border-radius: 25px 0px 0px 25px;
     }
 
     .popup.show {
@@ -144,6 +148,76 @@
     .popup.hide {
       right: -2100px;
       opacity: 0;
+    }
+
+    /*Create Account CSS*/
+    .new-account-cont {
+      display: flex;
+      align-items: center; 
+      justify-content: center;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+    }
+    
+    .new-account-cont h2 {
+      margin-left: 10px; 
+      font-size: 55px; 
+    }
+    
+    .new-account-cont i {
+      font-size: 55px;
+      color: #373737;
+    }
+
+    .form-section {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 15px 0px;
+    }
+    
+    .form-section label {
+      color:#373737;
+      flex: 0 0 230px;
+      text-align: left;
+      margin-right: 10px;
+      font-size: 20px;
+    }
+    
+    .form-section input {
+      height: 24px;
+      flex: 1;
+    }
+
+    .form-section button {
+      display: block;
+      margin: 0 auto;
+      padding: 5px 50px;
+      background-color: #dd2323;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: inset 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+    
+    .form-section button:hover {
+      background-color: #b30000; /* Darken the background color on hover */
+    }
+
+    .self-account{
+      display: flex;
+      font-size: 32px;
+      flex-direction: column;
+      align-items: center;
+      margin: 5px 0;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .self-account i{
+      font-size: 190px;
+      color: black;;
     }
   </style>
 </head>
@@ -192,9 +266,8 @@
       <i class="fas fa-sign-out-alt"></i> Sign out
     </a>
   </div>
-  <div class="main-content">
-    <h2>Welcome to Employee </h2>
-    <h2>Performance Monitoring</h2>
+  <div class="main-content header-text">
+    <h2>Welcome to Employee Performance Monitoring</h2>
   </div>
   <div class="popup" id="popup">
     <div class="popup-content">
@@ -213,44 +286,99 @@
     });
 
     var currentPopup = null;
+    var popupContent = null; 
 
     function showPopup(buttonText) {
       var popup = document.getElementById("popup");
-      var popupContent;
+      
+      // Create popup content only if it's not already created
+      if (!popupContent) {
+        popupContent = document.createElement("div");
+        popupContent.classList.add("popup-content");
+        popup.appendChild(popupContent);
+      }
+    
       switch(buttonText) {
         case "Admin":
-          popupContent = "Admin panel content goes here.";
+          popupContent.innerHTML = "Admin panel content goes here.";
           break;
         case "Create account":
-          popupContent = "Form for creating a new account.";
+          popupContent.innerHTML = `
+          <div class="new-account-cont header-text">
+            <i class="fas fa-address-card"></i>
+            <h2>Create New Employee Account</h2>
+          </div>
+          <div class="form-section">
+            <label for="employee-id">Employee ID:</label>
+            <input type="text" id="employee-id" value="${localStorage.getItem("employee-id") || ""}">
+          </div>
+          <div class="form-section">
+            <label for="employee-name">Employee Name:</label>
+            <input type="text" id="employee-name" value="${localStorage.getItem("employee-name") || ""}">
+          </div>
+          <div class="form-section">
+            <label for="employee-position">Employee Position:</label>
+            <input type="text" id="employee-position" value="${localStorage.getItem("employee-position") || ""}">
+          </div>
+          <div class="form-section">
+            <label for="employee-department">Employee Department:</label>
+            <input type="text" id="employee-department" value="${localStorage.getItem("employee-department") || ""}">
+          </div>
+          <div class="form-section">
+            <label for="employee-type">Employee Type:</label>
+            <input type="text" id="employee-type" value="${localStorage.getItem("employee-type") || ""}">
+          </div>
+          <div class="form-section">
+            <label for="employee-superID">Employee Supervisor ID:</label>
+            <input type="text" id="employee-superID" value="${localStorage.getItem("employee-superID") || ""}">
+          </div>
+          <div class="form-section">
+            <button id="create-account-next">Next</button>
+          </div>
+          `;
           break;
         case "My account":
-          popupContent = "View and edit your account details.";
+          popupContent.innerHTML = `
+            <div class="form-section self-account">
+              <i class="fas fa-user-circle"></i>
+              <h4>Employee Name</h4>
+            </div>
+            <div class="form-section">
+              <label for="id">ID:</label>
+              <input type="text" id="id" readonly>
+            </div>
+            <div class="form-section">
+              <label for="position">Position:</label>
+              <input type="text" id="position" readonly>
+            </div>
+            <div class="form-section">
+              <label for="department">Department:</label>
+              <input type="text" id="department" readonly>
+            </div>
+            <div class="form-section">
+              <label for="email">Supervisor:</label>
+              <input type="text" id="superID" readonly>
+            </div>
+          `;
           break;
-        case "Employee agreement":
-          popupContent = "View the employee agreement.";
-          break;
-        case "My agreement":
-          popupContent = "View your personal agreement.";
-          break;
-        case "My evaluation":
-          popupContent = "View your performance evaluation.";
-          break;
+        // Add cases for other buttons as needed
         default:
-          popupContent = "Default popup content.";
+          popupContent.innerHTML = "Default popup content.";
       }
-
+    
       if (currentPopup) {
         currentPopup.classList.add("hide");
         currentPopup.addEventListener('transitionend', function() {
           currentPopup.classList.remove("show");
           currentPopup.classList.remove("hide");
-          currentPopup.querySelector(".popup-content").innerHTML = "<p>" + popupContent + "</p>";
+          currentPopup.querySelector(".popup-content").innerHTML = "";
+          currentPopup.querySelector(".popup-content").appendChild(popupContent);
           popup.classList.add("show");
           currentPopup = popup;
         }, { once: true });
       } else {
-        popup.querySelector(".popup-content").innerHTML = "<p>" + popupContent + "</p>";
+        popup.querySelector(".popup-content").innerHTML = "";
+        popup.querySelector(".popup-content").appendChild(popupContent);
         popup.classList.add("show");
         currentPopup = popup;
       }
@@ -284,6 +412,108 @@
           }
         }
       });
+    });
+
+    document.addEventListener("click", function(event) {
+      if (event.target && event.target.id === "create-account-next") {
+        var employeeID = document.getElementById("employee-id").value;
+        var employeeName = document.getElementById("employee-name").value;
+        var employeePos = document.getElementById("employee-position").value;
+        var employeeDep = document.getElementById("employee-department").value;
+        var employeeType = document.getElementById("employee-type").value;
+        var employeeSuperID = document.getElementById("employee-superID").value;
+        localStorage.setItem("employee-id", employeeID);
+        localStorage.setItem("employee-name", employeeName);
+        localStorage.setItem("employee-position", employeePos);
+        localStorage.setItem("employee-department", employeeDep);
+        localStorage.setItem("employee-type", employeeType);
+        localStorage.setItem("employee-superID", employeeSuperID);
+
+        popupContent.innerHTML = `
+          <div class="new-account-cont header-text">
+            <i class="fas fa-address-card"></i>
+            <h2>Create New Employee Account</h2>
+          </div>
+          <div class="form-section">
+            <label for="employee-email">Employee Email:</label>
+            <input type="text" id="employee-email" value="${localStorage.getItem("employee-email") || ""}">
+          </div>
+          <div class="form-section">
+            <label for="employee-password">Employee Password:</label>
+            <input type="text" id="employee-password" value="${localStorage.getItem("employee-password") || ""}">
+          </div>
+          <div class="form-section">
+            <button id="create-account-back">Back</button>
+            <button id="create-account-submit">Submit</button>
+          </div>
+        `;
+      }
+    });
+
+    document.addEventListener("click", function(event) {
+      if (event.target && event.target.id === "create-account-back") {
+        var employeeEmail = document.getElementById("employee-email").value;
+        var employeePassword = document.getElementById("employee-password").value;
+        localStorage.setItem("employee-email", employeeEmail);
+        localStorage.setItem("employee-password", employeePassword);
+
+        popupContent.innerHTML = `
+        <div class="new-account-cont header-text">
+          <i class="fas fa-address-card"></i>
+          <h2>Create New Employee Account</h2>
+        </div>
+        <div class="form-section">
+          <label for="employee-id">Employee ID:</label>
+          <input type="text" id="employee-id" value="${localStorage.getItem("employee-id") || ""}">
+        </div>
+        <div class="form-section">
+          <label for="employee-name">Employee Name:</label>
+          <input type="text" id="employee-name" value="${localStorage.getItem("employee-name") || ""}">
+        </div>
+        <div class="form-section">
+          <label for="employee-position">Employee Position:</label>
+          <input type="text" id="employee-position" value="${localStorage.getItem("employee-position") || ""}">
+        </div>
+        <div class="form-section">
+          <label for="employee-department">Employee Department:</label>
+          <input type="text" id="employee-department" value="${localStorage.getItem("employee-department") || ""}">
+        </div>
+        <div class="form-section">
+          <label for="employee-type">Employee Type:</label>
+          <input type="text" id="employee-type" value="${localStorage.getItem("employee-type") || ""}">
+        </div>
+        <div class="form-section">
+          <label for="employee-superID">Employee Supervisor ID:</label>
+          <input type="text" id="employee-superID" value="${localStorage.getItem("employee-superID") || ""}">
+        </div>
+        <div class="form-section">
+          <button id="create-account-next">Next</button>
+        </div>
+        `;
+      }
+    });
+
+    document.addEventListener("click", function(event) {
+      if (event.target && event.target.id === "create-account-submit") {
+        localStorage.removeItem("employee-id");
+        localStorage.removeItem("employee-name");
+        localStorage.removeItem("employee-position");
+        localStorage.removeItem("employee-department");
+        localStorage.removeItem("employee-type");
+        localStorage.removeItem("employee-superID");
+        localStorage.removeItem("employee-email");
+        localStorage.removeItem("employee-password");
+
+        var popup = document.getElementById("popup");
+        popup.classList.add("hide");
+        popup.addEventListener('transitionend', function() {
+          popup.classList.remove("show");
+          popup.classList.remove("hide");
+          var popupContent = document.querySelector(".popup-content");
+          popupContent.innerHTML = ""; 
+          currentPopup = null;
+        }, { once: true });
+      }
     });
   </script>
 </body>
