@@ -23,8 +23,8 @@
       padding: 10px 0;
     }
 
-    h2 {
-      font-size: 80px;
+    .header-text {
+      font-size: 40px;
       font-family: Alike; 
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
       margin: 0 0 10px 0;
@@ -64,9 +64,14 @@
     }
     
     .sidebar i {
-      font-size: 16px; 
+      font-size: 24px; 
       margin-right: 10px;
     }
+
+    .fa-fw{
+      vertical-align: middle;
+    }
+
     .sidebar label:not(#sign-out) {
       margin-bottom: 20px;
     }
@@ -197,6 +202,85 @@
       font-size: 190px;
       color: black;;
     }
+
+    /*Employee Agreement CSS*/
+    .agree-eval-header{
+      display: flex;
+      align-items: center; 
+      justify-content: center;
+      gap: 30px;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .container-section {
+      display: flex;
+      justify-content: center; 
+    }
+    
+    .left-section,
+    .right-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; 
+    }
+    
+    .back-btn-agree, .back-btn-eval,
+    .next-btn-agree, .next-btn-eval {
+      padding: 12px 20px;
+      background-color: #dd2323;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      color: white;
+      position: absolute;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+      bottom: 30px;
+    }
+    
+    .back-btn-agree, .back-btn-eval {
+      left: 40%; 
+    }
+    
+    .next-btn-agree, .next-btn-eval {
+      right: 40%;
+    }
+
+    .back-btn-agree:hover,
+    .back-btn-eval:hover {
+      background-color: #373737;
+    }
+    
+    .next-btn-agree:hover,
+    .next-btn-eval:hover {
+      background-color: #373737;
+    }
+
+    .agree-eval-container {
+      background-color: #f0f0f0;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 10px;
+      position: relative;
+    }
+    
+    .view-agree-eval-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      padding: 12px;
+      background-color: #dd2323;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .view-agree-eval-btn:hover {
+      background-color: #373737;
+    }
   </style>
 </head>
 <body>
@@ -207,46 +291,45 @@
     <div class="sidebar-btn">
       <input type="radio" id="my-account" name="menu">
       <label for="my-account">
-        <i class="fas fa-user"></i> My account
+        <i class="fas fa-user fa-fw"></i>My account
       </label>
     </div>
     <div class="sidebar-btn">
       <input type="radio" id="employee-evaluation" name="menu">
       <label for="employee-evaluation">
-        <i class="fas fa-user-plus"></i>Employee evaluation
+        <i class="fas fa-file-alt fa-fw"></i>Employee evaluation
       </label>
     </div>
     <div class="sidebar-btn">
       <input type="radio" id="employee-agreement" name="menu">
       <label for="employee-agreement">
-        <i class="fas fa-address-card"></i>Employee agreement
+        <i class="fas fa-file-contract fa-fw"></i>Employee agreement
       </label>
     </div>
     <div class="sidebar-btn">
       <input type="radio" id="my-agreement" name="menu">
       <label for="my-agreement">
-        <i class="fas fa-address-card"></i>My agreement
+        <i class="fas fa-user-check fa-fw"></i>My agreement
       </label>
     </div>
     <div class="sidebar-btn">
       <input type="radio" id="my-evaluation" name="menu">
       <label for="my-evaluation">
-        <i class="fas fa-file-signature"></i>My evaluation
+        <i class="fas fa-file-signature fa-fw"></i>My evaluation
       </label>
     </div>
     <div class="sidebar-btn">
       <input type="radio" id="report" name="menu">
       <label for="report">
-        <i class="fas fa-clipboard-check"></i> Report
+        <i class="fas fa-clipboard-check fa-fw"></i>Report
       </label>
     </div>
     <a href="#" id="sign-out">
-      <i class="fas fa-sign-out-alt"></i> Sign out
+      <i class="fas fa-sign-out-alt fa-fw"></i>Sign out
     </a>
   </div>
-  <div class="main-content">
-    <h2>Welcome to Employee </h2>
-    <h2>Performance Monitoring</h2>
+  <div class="main-content header-text">
+    <h2>Welcome to Employee Performance Monitoring</h2>
   </div>
   <div class="popup" id="popup">
     <div class="popup-content">
@@ -264,13 +347,13 @@
       }
     });
 
+    // Create popup content only if it's not already created
     var currentPopup = null;
     var popupContent = null; 
 
     function showPopup(buttonText) {
       var popup = document.getElementById("popup");
       
-      // Create popup content only if it's not already created
       if (!popupContent) {
         popupContent = document.createElement("div");
         popupContent.classList.add("popup-content");
@@ -303,10 +386,36 @@
           `;
           break;
         case "Employee evaluation":
-          popupContent.innerHTML = "Employee evaluation content here";
+          popupContent.innerHTML = `
+            <div class="agree-eval-header header-text">
+              <i class="fas fa-file-alt"></i>
+              <h2>Employee Evaluation List</h2>
+            </div>
+            <div id="container-section" class="container-section">
+              <!-- Left and right sections will be added dynamically here -->
+            </div>
+            <div>
+            <button id="back-btn-eval" class="back-btn-eval"><i class="fas fa-arrow-left"></i> Back</button>
+            <button id="next-btn-eval" class="next-btn-eval">Next <i class="fas fa-arrow-right"></i> </button>
+          `;
+          currentEvalIndex = 0; // Reset the current index when opening the popup
+          showEvalContainers();
           break;
         case "Employee agreement":
-          popupContent.innerHTML = "Employee agreement content here";
+          popupContent.innerHTML = `
+            <div class="agree-eval-header header-text">
+              <i class="fas fa-file-contract"></i>
+              <h2>Employee Agreement List</h2>
+            </div>
+            <div id="container-section" class="container-section">
+              <!-- Left and right sections will be added dynamically here -->
+            </div>
+            <div>
+            <button id="back-btn-agree" class="back-btn-agree"><i class="fas fa-arrow-left"></i> Back</button>
+            <button id="next-btn-agree" class="next-btn-agree">Next <i class="fas fa-arrow-right"></i> </button>
+          `;
+          currentAgreeIndex = 0; // Reset the current index when opening the popup
+          showAgreeContainers();
           break;
         case "My evalution":
           popupContent.innerHTML = "My evalution content here";
@@ -368,6 +477,126 @@
         }
       });
     });
+
+// Employee Agreement Script
+let currentAgreeIndex = 0;
+const totalAgreeContainers = 33; // Change this to count the total number of records in the DB
+let currentEvalIndex = 0;
+const totalEvalContainers = 19; // Change this to count the total number of records in the DB
+
+function createAgreeContainer(index) {
+  const container = document.createElement('div');
+  container.classList.add('agree-eval-container');
+  container.textContent = `Employee Agreement ${index + 1}`; // Change this to display the list of employees instead
+
+  const button = document.createElement('button');
+  button.textContent = 'View Employee Agreement';
+  button.classList.add('view-agree-eval-btn');
+
+  container.appendChild(button);
+
+  return container;
+}
+
+function showAgreeContainers() {
+  const containerSection = document.getElementById('container-section');
+  containerSection.innerHTML = ''; // Clear the container before adding new content
+  const leftSection = document.createElement('div');
+  leftSection.classList.add('left-section');
+  const rightSection = document.createElement('div');
+  rightSection.classList.add('right-section');
+
+  for (let i = currentAgreeIndex; i < currentAgreeIndex + 8 && i < totalAgreeContainers; i++) {
+    const container = createAgreeContainer(i);
+    if (i % 2 === 0) {
+      leftSection.appendChild(container);
+    } else {
+      rightSection.appendChild(container);
+    }
+  }
+  containerSection.appendChild(leftSection);
+  containerSection.appendChild(rightSection);
+
+  // Update button visibility
+  document.getElementById('next-btn-agree').style.display = currentAgreeIndex + 8 < totalAgreeContainers ? 'block' : 'none';
+  document.getElementById('back-btn-agree').style.display = currentAgreeIndex > 0 ? 'block' : 'none';
+}
+
+// Event listener for next and back buttons in employee agreement popup
+document.addEventListener("click", function(event) {
+  if (event.target && event.target.id === "next-btn-agree") {
+    currentAgreeIndex += 8;
+    showAgreeContainers();
+  }
+});
+
+document.addEventListener("click", function(event) {
+  if (event.target && event.target.id === "back-btn-agree") {
+    currentAgreeIndex -= 8;
+    if (currentAgreeIndex < 0) {
+      currentAgreeIndex = 0;
+    }
+    showAgreeContainers();
+  }
+});
+
+// Employee Evaluation Script
+function createEvalContainer(index) {
+  const container = document.createElement('div');
+  container.classList.add('agree-eval-container');
+  container.textContent = `Employee Evaluation ${index + 1}`; // Change this to display the list of employees instead
+
+  const button = document.createElement('button');
+  button.textContent = 'View Employee Evaluation';
+  button.classList.add('view-agree-eval-btn');
+
+  container.appendChild(button);
+
+  return container;
+}
+
+function showEvalContainers() {
+  const containerSection = document.getElementById('container-section');
+  containerSection.innerHTML = ''; // Clear the container before adding new content
+  const leftSection = document.createElement('div');
+  leftSection.classList.add('left-section');
+  const rightSection = document.createElement('div');
+  rightSection.classList.add('right-section');
+
+  for (let i = currentEvalIndex; i < currentEvalIndex + 8 && i < totalEvalContainers; i++) {
+    const container = createEvalContainer(i);
+    if (i % 2 === 0) {
+      leftSection.appendChild(container);
+    } else {
+      rightSection.appendChild(container);
+    }
+  }
+  containerSection.appendChild(leftSection);
+  containerSection.appendChild(rightSection);
+
+  // Update button visibility
+  document.getElementById('next-btn-eval').style.display = currentEvalIndex + 8 < totalEvalContainers ? 'block' : 'none';
+  document.getElementById('back-btn-eval').style.display = currentEvalIndex > 0 ? 'block' : 'none';
+}
+
+// Event listener for next and back buttons in employee evaluation popup
+document.addEventListener("click", function(event) {
+  if (event.target && event.target.id === "next-btn-eval") {
+    currentEvalIndex += 8;
+    showEvalContainers();
+  }
+});
+
+document.addEventListener("click", function(event) {
+  if (event.target && event.target.id === "back-btn-eval") {
+    currentEvalIndex -= 8;
+    if (currentEvalIndex < 0) {
+      currentEvalIndex = 0;
+    }
+    showEvalContainers();
+  }
+});
+
   </script>
 </body>
 </html>

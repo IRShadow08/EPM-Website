@@ -28,7 +28,6 @@
       font-family: Alike; 
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
       margin: 0 0 10px 0;
-      text-align: right;
     }
 
     .sidebar {
@@ -62,12 +61,20 @@
       box-sizing: border-box;
       font-size: 20px;
       position: relative;
+      gap: 10px;
     }
     
     .sidebar i {
       font-size: 24px;
-      margin-right: 10px;
+      margin-right: 20px;
+      width: 20px;
+      height: 20px;
     }
+
+    .fa-fw {
+      vertical-align: middle;
+    }
+
     .sidebar label:not(#sign-out) {
       margin-bottom: 20px;
     }
@@ -202,7 +209,7 @@
     }
     
     .form-section button:hover {
-      background-color: #b30000; /* Darken the background color on hover */
+      background-color: #373737;
     }
 
     .self-account{
@@ -219,6 +226,83 @@
       font-size: 190px;
       color: black;;
     }
+
+    /*Employee Agreement CSS*/
+    .agree-eval-header{
+      display: flex;
+      align-items: center; 
+      justify-content: center;
+      gap: 30px;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .container-section {
+      display: flex;
+      justify-content: center; 
+    }
+    
+    .left-section,
+    .right-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; 
+    }
+    
+    .back-btn,
+    .next-btn {
+      padding: 12px 20px;
+      background-color: #dd2323;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      color: white;
+      position: absolute;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+      bottom: 30px;
+    }
+    
+    .back-btn {
+      left: 40%; 
+    }
+    
+    .next-btn {
+      right: 40%;
+    }
+
+    .back-btn:hover {
+      background-color: #373737;
+    }
+    
+    .next-btn:hover {
+      background-color: #373737;
+    }
+
+    .agree-eval-container {
+      background-color: #f0f0f0;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 10px;
+      position: relative;
+    }
+    
+    .view-agree-eval-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      padding: 12px;
+      background-color: #dd2323;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .view-agree-eval-btn:hover {
+      background-color: #373737;
+    }
   </style>
 </head>
 <body>
@@ -229,41 +313,41 @@
     <div class="sidebar-btn">
       <input type="radio" id="admin" name="menu">
       <label for="admin">
-        <i class="fas fa-user"></i> Admin
+        <i class="fas fa-cogs fa-fw"></i>Admin
       </label>
     </div>
     <div class="sidebar-btn">
       <input type="radio" id="create-account" name="menu">
       <label for="create-account">
-        <i class="fas fa-user-plus"></i>Create account
+        <i class="fas fa-user-plus fa-fw"></i>Create account
       </label>
     </div>
     <div class="sidebar-btn">
       <input type="radio" id="my-account" name="menu">
       <label for="my-account">
-        <i class="fas fa-address-card"></i>My account
+        <i class="fas  fa-user fa-fw"></i>My account
       </label>
     </div>
     <div class="sidebar-btn">
       <input type="radio" id="employee-agreement" name="menu">
       <label for="employee-agreement">
-        <i class="fas fa-file-contract"></i> Employee agreement
+        <i class="fas fa-file-contract fa-fw"></i>Employee agreement
       </label>
     </div>
     <div class="sidebar-btn">
       <input type="radio" id="my-agreement" name="menu">
       <label for="my-agreement">
-        <i class="fas fa-file-signature"></i>My agreement
+        <i class="fas fa-file-signature fa-fw"></i>My agreement
       </label>
     </div>
     <div class="sidebar-btn">
       <input type="radio" id="my-evaluation" name="menu">
       <label for="my-evaluation">
-        <i class="fas fa-clipboard-check"></i> My evaluation
+        <i class="fas fa-clipboard-check fa-fw"></i>My evaluation
       </label>
     </div>
     <a href="#" id="sign-out">
-      <i class="fas fa-sign-out-alt"></i> Sign out
+      <i class="fas fa-sign-out-alt fa-fw"></i> Sign out
     </a>
   </div>
   <div class="main-content header-text">
@@ -361,7 +445,28 @@
             </div>
           `;
           break;
-        // Add cases for other buttons as needed
+        case "Employee agreement":
+          popupContent.innerHTML = `
+            <div class="agree-eval-header header-text">
+              <i class="fas fa-file-contract"></i>
+              <h2>Employee Agreement List</h2>
+            </div>
+            <div id="container-section" class="container-section">
+              <!-- Left and right sections will be added dynamically here -->
+            </div>
+            <div>
+            <button id="back-btn" class="back-btn"><i class="fas fa-arrow-left"></i> Back</button>
+            <button id="next-btn" class="next-btn">Next <i class="fas fa-arrow-right"></i> </button>
+          `;
+          currentIndex = 0; // Reset the current index when opening the popup
+          showContainers();
+          break;
+        case "My agreement":
+          popupContent.innerHTML = "My agreement content here";
+          break;
+        case "My agreement":
+          popupContent.innerHTML = "My agreement content here";
+          break;
         default:
           popupContent.innerHTML = "Default popup content.";
       }
@@ -414,6 +519,8 @@
       });
     });
 
+
+    //Create Account Script
     document.addEventListener("click", function(event) {
       if (event.target && event.target.id === "create-account-next") {
         var employeeID = document.getElementById("employee-id").value;
@@ -513,6 +620,71 @@
           popupContent.innerHTML = ""; 
           currentPopup = null;
         }, { once: true });
+      }
+    });
+
+
+    //Employee Agreement Script
+    let currentIndex = 0;
+    const totalContainers = 33; // Change this to count the total number of records in the DB
+
+    function createContainer(index) {
+      const container = document.createElement('div');
+      container.classList.add('agree-eval-container');
+      container.textContent = `Employee Agreement ${index + 1}`; // Change this to display the list of employees instead
+      
+      const button = document.createElement('button');
+      button.textContent = 'View Employee Agreement';
+      button.classList.add('view-agree-eval-btn');
+      
+      container.appendChild(button);
+      
+      return container;
+    }
+    
+    function showContainers() {
+      const containerSection = document.getElementById('container-section');
+      const leftSection = document.createElement('div');
+      leftSection.classList.add('left-section');
+      const rightSection = document.createElement('div');
+      rightSection.classList.add('right-section');
+    
+      for (let i = 0; i < 8 && currentIndex < totalContainers; i++, currentIndex++) {
+        const container = createContainer(currentIndex);
+        if (i % 2 === 0) {
+          leftSection.appendChild(container);
+        } else {
+          rightSection.appendChild(container);
+        }
+      }
+      containerSection.appendChild(leftSection);
+      containerSection.appendChild(rightSection);
+      
+      if (currentIndex >= totalContainers) { document.getElementById('next-btn').style.display = 'none'; } 
+      else { document.getElementById('next-btn').style.display = 'block'; }
+      
+      if (currentIndex == 8) { document.getElementById('back-btn').style.display = 'none'; } 
+      else { document.getElementById('back-btn').style.display = 'block'; }
+    }
+
+    document.addEventListener("click", function(event) {
+      if (event.target && event.target.id === "next-btn"){
+        const containerSection = document.getElementById('container-section');
+        containerSection.innerHTML = '';
+    
+        showContainers();
+      }
+    });
+    document.addEventListener("click", function(event) {
+      if (event.target && event.target.id === "back-btn") {
+        const containerSection = document.getElementById('container-section');
+        containerSection.innerHTML = '';
+    
+        currentIndex -= 16; 
+        if (currentIndex < 0) {
+          currentIndex = 0;
+        }
+        showContainers();
       }
     });
   </script>
