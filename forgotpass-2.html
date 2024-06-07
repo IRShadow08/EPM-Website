@@ -1,260 +1,134 @@
-<div class="container">
-  <div class="content-wrapper">
-      <section class="left-column">
-          <article class="info-box">
-              <div class="container-1">
-                  <div class="image-wrapper">
-                      <img loading="lazy" src="assets/bkg1done.png" alt="Main visual" class="main-image" />
-                  </div>
-              </div>
-              <div class="container-2">
-                  <div class="form-wrapper">
-                      <div class="headline">
-                          <div class="icon"></div>
-                          <div class="headline-text">Change Password</div>
-                      </div>
-                      <form class="form-container">
-                          <input type="password" id="newPassword" placeholder="New Password" aria-label="New Password" class="input-field" />
-                          <input type="password" id="confirmPassword" placeholder="Confirm Password" aria-label="Confirm Password" class="input-field" />
-                          <button type="submit" class="submit-button">Sign in</button>
-                      </form>
-                  </div>
-              </div>
-          </article>
-      </section>
-      <aside class="right-column">
-          <div class="image-container">
-              <img loading="lazy" src="assets/mlog.png" alt="Decorative Image" class="decorative-image" />
-          </div>
-      </aside>
-  </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Performance Monitoring</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Karantina:wght@300;400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
-<style>
-    @import url('https://fonts.googleapis.com/css?family=Inter');
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      min-height: 100vh;
+      width: 100%;
+      background-color: #dfdfdf;
+      background-image: url('assets/bkglogin.png');
+      background-size: cover;
+      background-position: center;
     }
-
     .container {
-        background-color: #dfdfdf;
-        height: 100vh;
-        display: flex;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      height: 100%;
+      width: 35%;
+    }
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #ed1e28;
+      height: 51px;
+      z-index: 1000;
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #002654;
+      padding: 20px;
+    }
+    .title {
+      text-align: center;
+      font-size: 115px;
+      text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+      font-family: "Karantina", system-ui;
+      max-width: 60%;
+    }
+    .input-container {
+      width: 70%;
     }
 
-    .content-wrapper {
-        display: flex;
-        width: 100%;
-        height: 100%;
-    }
-
-    @media (max-width: 991px) {
-        .content-wrapper {
-            flex-direction: column;
-            align-items: stretch;
-        }
-    }
-
-    .left-column, .right-column {
-        display: flex;
-        flex-direction: column;
-        width: 50%;
-        height: 100%;
-        background-color: #dfdfdf;
-    }
-
-    @media (max-width: 991px) {
-        .left-column, .right-column {
-            width: 100%;
-            height: auto;
-        }
-    }
-
-    .info-box {
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-        background-color: #f4f2f2;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        width: 100%;
-    }
-
-    @media (max-width: 991px) {
-        .info-box {
-            max-width: 100%;
-        }
-    }
-
-    .container-1 {
-        width: fit-content;
-    }
-
-    .container-2 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-    }
-
-
-    .image-wrapper {
-        display: flex;
-        width: 100%;
-    }
-
-    .main-image {
-        aspect-ratio: 2.22;
-        object-fit: cover;
-        width: 100%;
-    }
-
-    .form-wrapper {
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-        background-color: rgba(237, 237, 237, 0.6);
-        display: flex;
-        width: 90%;
-        height: 85%;
-        flex-direction: column;
-        padding: 10px 0 0;
-        align-items: center;
-    }
-
-    @media (max-width: 991px) {
-        .form-wrapper {
-            width: 100%;
-        }
-    }
-
-    .headline {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        font-size: 45px;
-        font-weight: normal;
-        color: #f00;
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    @media (max-width: 991px) {
-        .headline {
-            flex-wrap: wrap;
-            font-size: 30px;
-        }
-    }
-
-    .icon {
-        height: 70px;
-        width: 18px;
-        background-color: #fe3232;
-        margin-right: 10px;
-    }
-
-    .headline-text {
-        font-family: Inter;
-    }
-
-    @media (max-width: 991px) {
-        .headline-text {
-            max-width: 100%;
-            font-size: 30px;
-        }
-    }
-
-    .form-container {
-        display: flex;
-        flex-direction: column;
-        width: 80%;
-        height: 80%;
-        padding: 0 20px;
-        align-items: center;
-        justify-content: center;
-    }
-
-    @media (max-width: 991px) {
-        .form-container {
-            width: 100%;
-            padding: 0 20px;
-        }
-    }
-
-    .input-field,
-    .submit-button {
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    .input-field::placeholder {
+      color: #002654;
     }
 
     .input-field {
-        border-radius: 10px;
-        border: 1px solid rgba(0, 0, 0, 0.5);
-        background-color: #fff;
-        color: rgba(0, 0, 0, 0.5);
-        padding: 15px;
-        margin-bottom: 30px;
-        font-size: 35px;
-        width: 85%;
+      width: 100%;
+      padding: 25px;
+      margin-top: 30px;
+      font-size: 35px;
+      border: 1px solid rgba(0, 38, 84, 1);
+      border-radius: 10px;
+      box-sizing: border-box;
+      color: #002654;
     }
-
     .link {
-        color: #097ea4;
-        text-align: center;
-        margin-top: 5px;
-        margin-bottom: 50px;
-        font: 25px Inter, sans-serif;
+      color: #097ea4;
+      text-align: center;
+      margin-top: 15px;
+      font-size: 25px;
     }
-
     .submit-button {
-        border-radius: 10px;
-        background-color: #f82626;
-        color: #fff;
-        text-align: center;
-        padding: 12px;
-        margin-top: 10px;
-        font: 35px Inter;
-        cursor: pointer;
-        width: 85%;
-        border: none;
+      background-color: #002654;
+      color: white;
+      text-align: center;
+      padding: 18px;
+      margin-top: 25px;
+      font-size: 40px;
+      border-radius: 10px;
+      cursor: pointer;
     }
-
-    @media (max-width: 991px) {
-        .submit-button {
-            font-size: 18px;
-            padding: 10px 20px;
-            width: 100%;
-        }
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #002654;
+      color: white;
+      text-align: center;
+      height: 51px;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-
-    .image-container {
-        background: linear-gradient(180deg, rgba(26, 41, 81, 0.83) 0%, #8e97ac 51%);
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-        display: flex;
-        flex-grow: 1;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        padding: 80px 60px;
+    @media (max-width: 600px) {
+      .title {
+        font-size: 30px;
+      }
+      .input-field {
+        font-size: 14px;
+      }
+      .submit-button {
+        font-size: 14px;
+      }
+      .container {
+        align-items: flex-end;
+      }
     }
-
-    @media (max-width: 991px) {
-        .image-container {
-            padding: 0 20px;
-        }
-    }
-
-    .decorative-image {
-        aspect-ratio: 1.19;
-        object-fit: auto;
-        object-position: center;
-        width: 50%;
-        max-width: 500px;
-        margin-top: 20px;
-    }
-
-    @media (max-width: 991px) {
-        .decorative-image {
-            margin-top: 20px;
-        }
-    }
-</style>
+  </style>
+</head>
+<body>
+  <div class="header"></div>
+  <div class="container">
+    <div class="content">
+      <div class="title">Employee Performance Monitoring</div>
+      <div class="input-container">
+        <input type="text" class="input-field" placeholder="New Password">
+        <input type="password" class="input-field" placeholder="Confirm Password">
+        <div class="submit-button">Set Password</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">©2024 Mapúa Malayan Colleges Laguna</div>
+</body>
+</html>
